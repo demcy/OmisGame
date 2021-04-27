@@ -15,7 +15,7 @@ public class Character implements WorldObject {
 
     public Character(String name, char symbol, boolean isVisible) {
         this.name = name;
-        //setRandomCoordinate();
+        setRandomCoordinate();
 //        this.xCoord = getRandomCoordinate(World.getWidth());
 //        this.yCoord = getRandomCoordinate(World.getHeight());
         this.symbol = symbol;

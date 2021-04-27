@@ -4,7 +4,8 @@ import com.omis.World;
 import com.omis.WorldObject;
 
 public class Item implements WorldObject {
-    private double strength;
+    private String name;
+    private int strength;
     private int durability;
     private  int xCoord;
     private  int yCoord;
@@ -13,10 +14,11 @@ public class Item implements WorldObject {
     private int level;
     private ItemType itemType;
 
-    public Item(double strength, int durability) {
+    public Item(String name, int strength, int durability) {
+        this.name = name;
         this.strength = strength;
         this.durability = durability;
-        //setRandomCoordinate();
+        setRandomCoordinate();
         this.symbol = 'I';
         this.isVisible = true;
         this.level = 0;
@@ -28,11 +30,11 @@ public class Item implements WorldObject {
         this.yCoord = (int) (Math.random() * (World.getHeight() - 1) + 1);
     }
 
-    public double getStrength() {
+    public int getStrength() {
         return strength;
     }
 
-    public void setStrength(double strength) {
+    public void setStrength(int strength) {
         this.strength = strength;
     }
 
@@ -90,5 +92,17 @@ public class Item implements WorldObject {
 
     public void setItemType(ItemType itemType) {
         this.itemType = itemType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Item: " +
+                "name=" + name +
+                ", strength=" + strength +
+                ", durability=" + durability;
     }
 }

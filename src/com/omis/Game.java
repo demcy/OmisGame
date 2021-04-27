@@ -15,15 +15,14 @@ import java.util.Scanner;
 public class Game {
 
     public static void main(String[] args) {
-        System.out.println("Hello World");
         World world = new World(5, 10);
         Player player = new Player("Player");
         Enemy enemy = new Enemy("Enemy");
         QuestMaster questMaster = new QuestMaster("QuestMaster");
 
-        Sword sword = new Sword(10.0, 1);
-        Dagger dagger = new Dagger(5.0, 2);
-        Hammer hammer = new Hammer(3.0, 5);
+        Sword sword = new Sword(10, 1);
+        Dagger dagger = new Dagger(5, 2);
+        Hammer hammer = new Hammer(3, 5);
 
         world.setCharacters(Arrays.asList(questMaster, player, enemy));
         world.setItems(Arrays.asList(sword, dagger, hammer));
@@ -59,16 +58,68 @@ public class Game {
                     player.getyCoord() == questMaster.getyCoord())
                 enemy.setVisible(true);
             if (player.getxCoord() == enemy.getxCoord() &&
-                    player.getyCoord() == enemy.getyCoord()) {
-                enemy.setVisible(false);
-                enemy.setRandomCoordinate();
-                checkCharacterCoordinates(player, enemy, questMaster, true);
+                    player.getyCoord() == enemy.getyCoord() && enemy.isVisible()) {
+                if(player.getItems().size() < 1){
+                    System.out.println("YOU CANT BATTLE");
+                } else {
+                    player.showItems();
+                    System.out.println("CHOOSE YOUR WEAPON: ");
+                    input =scanner.nextLine();
+                    Item chosenItem = null;
+                    while (chosenItem == null) {
+                        try {
+                            chosenItem = player.getItems().get(Integer.parseInt(input) - 1);
+                            Item finalChosenItem = chosenItem;
+                            player.getItems().stream()
+                                    .filter(i -> i.getName().equals(finalChosenItem.getName()))
+                                    .findFirst()
+                                    .ifPresent(i -> i.setDurability(i.getDurability() - 1));
+
+                            System.out.println("PUT IN NUMBER BETWEEN 1-3");
+                            input = scanner.nextLine();
+                            while (!input.equals("1") && !input.equals("2") && !input.equals("3")){
+                                input = scanner.nextLine();
+                                int randomNumber = (int) (Math.random() * (3 - 1) + 1);
+                                if(randomNumber == Integer.parseInt(input)){
+                                    enemy.loseHealth(chosenItem);
+                                } else {
+                                    player.loseHealth();
+                                }
+                            }
+
+                            enemy.setVisible(false);
+                            enemy.setRandomCoordinate();
+                            checkCharacterCoordinates(player, enemy, questMaster, true);
+                        } catch (NumberFormatException e) {
+                            System.out.println("PUT IN NUMBER!");
+                            input =scanner.nextLine();
+                        } catch (IndexOutOfBoundsException e) {
+                            System.out.println("CHOOSE EXISTED WEAPON!");
+                            input =scanner.nextLine();
+                        }
+                    }
+                }
             }
+
+            checkIfPlayerCanGetItem(player, sword);
+            checkIfPlayerCanGetItem(player, dagger);
+            checkIfPlayerCanGetItem(player, hammer);
+
+
             world.render();
             input = scanner.nextLine();
         }
 
     }
+
+    private static void checkIfPlayerCanGetItem(Player player, Item item) {
+        if (player.getxCoord() == item.getxCoord() &&
+                player.getyCoord() == item.getyCoord()) {
+            player.addItems(item);
+            item.setRandomCoordinate();
+        }
+    }
+
     private static void checkCharacterCoordinates(Player player, Enemy enemy, QuestMaster questMaster, boolean playerOnQuestMaster){
         if (player.getxCoord() == questMaster.getxCoord() &&
                 player.getyCoord() == questMaster.getyCoord()  && !playerOnQuestMaster ) {
@@ -78,7 +129,7 @@ public class Game {
         if(player.getxCoord() == enemy.getxCoord() &&
                 player.getyCoord() == enemy.getyCoord()) {
             enemy.setRandomCoordinate();
-
+            checkCharacterCoordinates(player, enemy, questMaster, playerOnQuestMaster);
         }
         if (enemy.getxCoord() == questMaster.getxCoord() &&
                 enemy.getyCoord() == questMaster.getyCoord() ) {

@@ -1,7 +1,7 @@
 package com.omis.item;
 
 public class Sword extends Item{
-    public Sword(double strength, int durability) {
-        super(strength, durability);
+    public Sword(int strength, int durability) {
+        super("SWORD", strength, durability);
     }
 }
