@@ -1,23 +1,27 @@
 package com.omis.character;
 
-import com.omis.item.Item;
-
 public class Enemy extends Character{
-    private int health;
+    private static int health;
+    private EnemyType enemyType;
     public Enemy(String name) {
         super(name, 'Z', false);
-        this.health = 10;
+        reBoost();
+        enemyType = EnemyType.getRandomEnemyType();
     }
 
-    public int getHealth() {
+    public static int getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public static void decreaseHealth(double healthTaken) {
+        health -= healthTaken;
     }
 
-    public void loseHealth(Item item) {
-        this.health = this.health - item.getStrength();
+    public static void killed(){
+        health = 0;
+    }
+
+    public static void reBoost() {
+        health = (int) (Math.random() * 10 + 1);
     }
 }

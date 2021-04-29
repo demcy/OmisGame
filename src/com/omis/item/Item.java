@@ -5,7 +5,7 @@ import com.omis.WorldObject;
 
 public class Item implements WorldObject {
     private String name;
-    private int strength;
+    private double strength;
     private int durability;
     private  int xCoord;
     private  int yCoord;
@@ -14,7 +14,7 @@ public class Item implements WorldObject {
     private int level;
     private ItemType itemType;
 
-    public Item(String name, int strength, int durability) {
+    public Item(String name, double strength, int durability) {
         this.name = name;
         this.strength = strength;
         this.durability = durability;
@@ -30,11 +30,11 @@ public class Item implements WorldObject {
         this.yCoord = (int) (Math.random() * (World.getHeight() - 1) + 1);
     }
 
-    public int getStrength() {
+    public double getStrength() {
         return strength;
     }
 
-    public void setStrength(int strength) {
+    public void setStrength(double strength) {
         this.strength = strength;
     }
 
@@ -84,10 +84,33 @@ public class Item implements WorldObject {
 
     public void setLevel(int level) {
         this.level = level;
+        if (this.level < 3){
+            this.itemType = ItemType.SILVER;
+        } else if (this.level < 5) {
+            this.itemType = ItemType.GOLD;
+        } else if (this.level < 7) {
+            this.itemType = ItemType.PLATINUM;
+        } else {
+            this.itemType = ItemType.TITANIUM;
+        }
     }
 
-    public ItemType getItemType() {
-        return itemType;
+    public double getStrengthFromItemType(double strength) {
+        switch (itemType){
+            case SILVER:
+                strength *= 0.75;
+                break;
+            case GOLD:
+                strength *= 1;
+                break;
+            case PLATINUM:
+                strength *= 1.25;
+                break;
+            case TITANIUM:
+                strength *= 1.5;
+                break;
+        }
+        return strength;
     }
 
     public void setItemType(ItemType itemType) {

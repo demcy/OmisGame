@@ -1,7 +1,17 @@
 package com.omis.item;
 
-public class Dagger extends Item {
-    public Dagger(int strength, int durability) {
-        super("DAGGER", strength, durability);
+import com.omis.character.Enemy;
+
+public class Dagger extends Item implements FigthWeapon{
+    private static double strength = 5.0;
+    public Dagger() {
+        super("DAGGER", strength, 2);
+    }
+
+    @Override
+    public void hit() {
+        Enemy.decreaseHealth(strength);
+        setLevel(getLevel() + 1);
+        strength = getStrengthFromItemType(strength);
     }
 }
