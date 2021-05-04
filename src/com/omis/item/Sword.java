@@ -1,7 +1,5 @@
 package com.omis.item;
 
-import com.omis.character.Enemy;
-
 public class Sword extends Item implements FigthWeapon{
     private static  double strength = 10.0;
     public Sword() {
@@ -9,9 +7,9 @@ public class Sword extends Item implements FigthWeapon{
     }
 
     @Override
-    public void hit() {
-        Enemy.killed();
-        setLevel(getLevel() + 1);
+    public double hit() {
         strength = getStrengthFromItemType(strength);
+        setLevel(getLevel() + 1);
+        return strength;
     }
 }

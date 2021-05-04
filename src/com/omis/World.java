@@ -20,28 +20,12 @@ public class World {
         return height;
     }
 
-//    public void setHeight(int height) {
-//        World.height = height;
-//    }
-
     public static int getWidth() {
         return width;
     }
 
-//    public void setWidth(int width) {
-//        World.width = width;
-//    }
-
-    public List<Character> getCharacters() {
-        return characters;
-    }
-
     public void setCharacters(List<Character> characters) {
         this.characters = characters;
-    }
-
-    public List<Item> getItems() {
-        return items;
     }
 
     public void setItems(List<Item> items) {
@@ -79,6 +63,4 @@ public class World {
             System.out.println();
         }
     }
-
-
 }

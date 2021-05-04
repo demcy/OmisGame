@@ -7,15 +7,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Player extends Character{
+public class Player extends Character implements FightCharacter{
     private Direction direction;
     private int health;
+    private int lives;
     private List<Item> items = new ArrayList<>();
 
-    public Player(String name) {
-        super(name, 'X', true);
+    public Player() {
+        super( 'X', true);
         this.direction = Direction.UP;
         this.health = 10;
+        this.lives = 3;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void takeLife() {
+        this.lives--;
     }
 
     public Direction getDirection() {
@@ -79,5 +89,10 @@ public class Player extends Character{
 
     public void loseHealth() {
         this.health--;
+    }
+
+    @Override
+    public void reBoost() {
+        this.health = 10;
     }
 }

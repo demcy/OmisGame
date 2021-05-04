@@ -4,13 +4,13 @@ import com.omis.World;
 import com.omis.WorldObject;
 
 public class Item implements WorldObject {
-    private String name;
+    private final String name;
     private double strength;
     private int durability;
-    private  int xCoord;
-    private  int yCoord;
-    private  char symbol;
-    private boolean isVisible;
+    private int xCoord;
+    private int yCoord;
+    private final char symbol;
+    private final boolean isVisible;
     private int level;
     private ItemType itemType;
 
@@ -30,14 +30,6 @@ public class Item implements WorldObject {
         this.yCoord = (int) (Math.random() * (World.getHeight() - 1) + 1);
     }
 
-    public double getStrength() {
-        return strength;
-    }
-
-    public void setStrength(double strength) {
-        this.strength = strength;
-    }
-
     public int getDurability() {
         return durability;
     }
@@ -50,32 +42,16 @@ public class Item implements WorldObject {
         return xCoord;
     }
 
-    public void setxCoord(int xCoord) {
-        this.xCoord = xCoord;
-    }
-
     public int getyCoord() {
         return yCoord;
-    }
-
-    public void setyCoord(int yCoord) {
-        this.yCoord = yCoord;
     }
 
     public char getSymbol() {
         return symbol;
     }
 
-    public void setSymbol(char symbol) {
-        this.symbol = symbol;
-    }
-
     public boolean isVisible() {
         return isVisible;
-    }
-
-    public void setVisible(boolean visible) {
-        isVisible = visible;
     }
 
     public int getLevel() {
@@ -111,10 +87,6 @@ public class Item implements WorldObject {
                 break;
         }
         return strength;
-    }
-
-    public void setItemType(ItemType itemType) {
-        this.itemType = itemType;
     }
 
     public String getName() {

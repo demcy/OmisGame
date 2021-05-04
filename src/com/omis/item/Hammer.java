@@ -1,7 +1,5 @@
 package com.omis.item;
 
-import com.omis.character.Enemy;
-
 public class Hammer extends Item implements FigthWeapon{
     private static  double strength = 3.0;
     public Hammer() {
@@ -9,9 +7,9 @@ public class Hammer extends Item implements FigthWeapon{
     }
 
     @Override
-    public void hit() {
-        Enemy.decreaseHealth(strength);
-        setLevel(getLevel() + 1);
+    public double hit() {
         strength = getStrengthFromItemType(strength);
+        setLevel(getLevel() + 1);
+        return strength;
     }
 }
